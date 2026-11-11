@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Search people · DCA{% endblock %}
+{% block content %}
+<h1>Search people</h1>
+<p class="lede">Search before starting an application. Names match despite spelling variants, hyphens and spacing. SSN is optional; full or last four, with or without dashes.</p>
+<form method="post" action="/search" class="grid search-form">
+  <div><label for="first_name">First name</label><input id="first_name" name="first_name" value="{{ criteria.first_name }}"></div>
+  <div><label for="last_name">Last name</label><input id="last_name" name="last_name" value="{{ criteria.last_name }}"></div>
+  <div><label for="dob">Date of birth</label><input id="dob" name="dob" type="date" value="{{ criteria.dob }}"></div>
+  <div><label for="ssn">SSN or last four</label><input id="ssn" name="ssn" inputmode="numeric" value="{{ criteria.ssn }}"></div>
+  <div class="wide"><label for="address">Address</label><input id="address" name="address" value="{{ criteria.address }}"></div>
+  <div class="actions"><button type="submit">Search</button></div>
+</form>
+
+{% if searched %}
+<h2>{{ results|length }} {{ 'match' if results|length == 1 else 'matches' }}</h2>
+{% if results %}
+<table>
+  <thead><tr><th scope="col">Name</th><th scope="col">Date of birth</th><th scope="col">SSN</th><th scope="col">Address</th><th scope="col">Applications</th><th scope="col"><span class="sr-only">Actions</span></th></tr></thead>
+  <tbody>
+  {% for p in results %}
+  <tr class="result">
+    <td>{{ p.first_name }} {{ p.last_name }}</td>
+    <td>{{ p.dob }}</td>
+    <td>{% if p.ssn %}•••-••-{{ p.ssn[-4:] }}{% else %}<span class="muted">none</span>{% endif %}</td>
+    <td>{{ p.address or '—' }}</td>
+    <td>{% for a in p.applications %}<a href="/applications/{{ a.id }}">#{{ a.id }} {{ PROGRAMS[a.program] }}</a>{% if not loop.last %}, {% endif %}{% else %}<span class="muted">none</span>{% endfor %}</td>
+    <td>{% if user.role in ('caseworker','supervisor') %}<a class="button small" href="/applications/new?person_id={{ p.id }}">Start application</a>{% endif %}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+{% if user.role in ('caseworker','supervisor') %}<p><a class="button secondary" href="/applications/new">Not found — start application for a new person</a></p>{% endif %}
+{% endif %}
+{% endblock %}

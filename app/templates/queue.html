@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Work queue · DCA{% endblock %}
+{% block content %}
+<h1>Work queue</h1>
+<p class="lede">
+  {% if user.role == 'caseworker' %}Your open applications.{% elif user.role == 'supervisor' %}Open applications for you and your team.{% else %}All open applications.{% endif %}
+  Expedited cases are listed first, then by due date.
+</p>
+{% if apps %}
+<table class="queue">
+  <thead><tr>
+    <th scope="col">#</th><th scope="col">Applicant</th><th scope="col">Program</th>
+    <th scope="col">Received</th><th scope="col">Due</th><th scope="col">Days remaining</th>
+    <th scope="col">Documents</th>{% if user.role != 'caseworker' %}<th scope="col">Caseworker</th>{% endif %}
+  </tr></thead>
+  <tbody>
+  {% for a in apps %}
+    <tr class="{% if a.expedited %}expedited{% elif a.days_remaining < 0 %}overdue{% elif a.days_remaining <= 10 %}near{% endif %}" data-app-id="{{ a.id }}">
+      <td><a href="/applications/{{ a.id }}">{{ a.id }}</a></td>
+      <td><a href="/applications/{{ a.id }}">{{ a.applicant_name }}</a>
+        {% if a.expedited %}<span class="badge badge-exp">EXPEDITED</span>{% endif %}</td>
+      <td>{{ PROGRAMS[a.program] }}</td>
+      <td>{{ a.received_date }}</td>
+      <td>{{ a.due_date }}</td>
+      <td class="days">{% if a.days_remaining < 0 %}{{ -a.days_remaining }} overdue{% else %}{{ a.days_remaining }}{% endif %}</td>
+      <td>{{ a.docs_verified }}/{{ a.docs_total }} verified</td>
+      {% if user.role != 'caseworker' %}<td>{{ a.assigned_name }}</td>{% endif %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No open applications.</p>
+{% endif %}
+{% endblock %}

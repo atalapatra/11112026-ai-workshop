@@ -29,3 +29,22 @@ Append one entry per run. The point is to improve the rules and tooling, not to 
 **Open improvements**
 - Sync uses ~5 `gh` calls per issue; batch via GraphQL if backlogs get large.
 - Consider an LLM-assisted "second reader" pass that reads only the transcript and lists requirements, then diff its list against the ledger to catch misclassification (the coverage check proves every utterance was *cited*, not that it was *understood*).
+
+## 2026-11-11 — Slice 1 build: intake to deadline
+
+**Result:** 7 stories (DCA-001, 004, 011, 012, 033, 034, 035) built as a FastAPI + SQLite app. 79 tests; `trace` covers 22/22 acceptance criteria; journey walked in the browser as caseworker and supervisor.
+
+**What worked**
+- **Acceptance criteria as the test spec, checked mechanically.** `trace` extends the transcript → ledger chain to ledger → tests. Writing it *before* the code gave a concrete 0/22 → 22/22 target.
+- **Pure domain functions with dates passed in** made the hard rules (business days, holidays, 18th birthdays, the 7-day window) easy to pin down with a fixed "today" (Veterans Day 2026 turned out to be a great test date).
+- **Mutation spot-check.** The tests passed on the first run, which proves nothing on its own. Breaking three rules on purpose (7-day boundary, holiday skip, supervisor notification) confirmed each was caught by the intended test. Now part of the Definition of Done.
+
+**What tests missed and the browser caught**
+- **SSN in the URL.** Search was a GET form, so SSNs landed in the URL, server logs and browser history. Every test passed. Found only by using the app → fixed (POST) and made a convention in build-process.md.
+- **Editable prefilled fields** for an existing person were silently ignored by the server → made read-only.
+
+**Judgment calls** are recorded in `slices/intake-to-deadline.md` under "Decisions made while building" (calendar vs business days, 18 = adult, verifications final, checklist snapshots).
+
+**Open improvements**
+- The ledger has no non-functional "privacy" acceptance criteria (e.g. "SSNs never in URLs or logs"). Consider a cross-cutting NFR checklist applied to every story at build time.
+- Parallel build (sessions/worktrees per story) wasn't exercised. The file-per-story-area layout should support it; try it on slice 2.

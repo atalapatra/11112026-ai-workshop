@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Application #{{ app.id }} · DCA{% endblock %}
+{% block content %}
+<h1>Application #{{ app.id }} — {{ app.applicant_name }}
+  {% if app.expedited %}<span class="badge badge-exp">EXPEDITED</span>{% endif %}</h1>
+
+<section class="clock {% if app.expedited %}expedited{% elif app.days_remaining < 0 %}overdue{% elif app.days_remaining <= 10 %}near{% endif %}" aria-label="Processing clock">
+  <div><span class="k">Days remaining</span><span class="v" id="days-remaining">{% if app.days_remaining < 0 %}{{ -app.days_remaining }} overdue{% else %}{{ app.days_remaining }}{% endif %}</span></div>
+  <div><span class="k">Due</span><span class="v">{{ app.due_date }}</span>
+    <span class="hint">{% if app.expedited %}3 business days (eviction {{ app.eviction_date }}){% else %}30 days from receipt{% endif %}</span></div>
+  <div><span class="k">Received</span><span class="v">{{ app.received_date }}</span><span class="hint">day {{ app.days_elapsed }}</span></div>
+  <div><span class="k">Program</span><span class="v small">{{ PROGRAMS[app.program] }}</span></div>
+</section>
+
+<div class="cols">
+<section>
+  <h2>Household</h2>
+  <p>{{ app.household.address }}, {{ app.household.city }} {{ app.household.zip }}<br>
+     <span class="hint">Arrived by {{ CHANNELS[app.channel]|lower }} · assigned to {{ app.assigned_name }}{% if app.emergency %} · emergency request{% endif %}</span></p>
+  <table>
+    <thead><tr><th scope="col">Name</th><th scope="col">Relationship</th><th scope="col">DOB</th><th scope="col">Monthly income</th></tr></thead>
+    <tbody>{% for m in app.members %}
+      <tr><td>{{ m.first_name }} {{ m.last_name }}</td><td>{{ m.relationship }}</td><td>{{ m.dob }}</td><td>${{ '%.2f'|format(m.monthly_income) }}</td></tr>
+    {% endfor %}</tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Document checklist <span class="hint">{{ app.checklist|selectattr('verified_at')|list|length }}/{{ app.checklist|length }} verified</span></h2>
+  {% if error %}<div class="alert" role="alert">{{ error }}</div>{% endif %}
+  <ul class="checklist">
+  {% for c in app.checklist %}
+    <li id="item-{{ c.id }}" class="{{ 'done' if c.verified_at else 'todo' }}">
+      <span class="status" aria-hidden="true">{{ '✓' if c.verified_at else '○' }}</span>
+      <div class="body">
+        <strong>{{ c.label }}</strong>
+        {% if c.verified_at %}
+          <div class="verified">Verified by <b>{{ c.verified_by_name }}</b> on {{ c.verified_at.replace('T', ' ') }} — “{{ c.document_ref }}”</div>
+        {% elif user.role in ('caseworker', 'supervisor') %}
+          <form method="post" action="/applications/{{ app.id }}/checklist/{{ c.id }}/verify" class="inline">
+            <label class="sr-only" for="ref{{ c.id }}">Document reviewed for {{ c.label }}</label>
+            <input id="ref{{ c.id }}" name="document_ref" placeholder="What did you look at? e.g. Pay stub dated 10/30/2026" required>
+            <button type="submit" class="small">Mark received &amp; verified</button>
+          </form>
+        {% else %}<div class="hint">Outstanding</div>{% endif %}
+      </div>
+    </li>
+  {% endfor %}
+  </ul>
+  <p class="hint">Verifications are permanent and cannot be edited.</p>
+</section>
+</div>
+{% endblock %}

@@ -9,6 +9,9 @@
 
   python3 scripts/backlog.py verify backlog/dca-kickoff.md
       Compare the GitHub project against the ledger; fails on any drift.
+
+  python3 scripts/backlog.py trace backlog/dca-kickoff.md slices/<slice>.md
+      Every acceptance criterion of every story in the slice has a test tagged story("DCA-xxx", n).
 """
 import argparse
 import json
@@ -411,16 +414,79 @@ def verify(ledger_path):
     return not problems
 
 
+# ---------------------------------------------------------------- trace
+
+TEST_TAG_RE = re.compile(r"""story\(\s*["'](DCA-\d{3})["']\s*,\s*(\d+)\s*\)""")
+
+
+def acceptance_criteria(body):
+    """1-based list of acceptance-criteria bullets ('- [ ] ...') under **Acceptance criteria**."""
+    _, _, after = body.partition("**Acceptance criteria**")
+    acs = []
+    for line in after.splitlines():
+        if line.startswith("- [ ] "):
+            acs.append(line[6:].strip())
+        elif acs and line.strip() and not line.startswith("  "):
+            break
+    return acs
+
+
+def trace(ledger_path, slice_path, tests_dir="tests"):
+    ledger = parse_ledger(ledger_path)
+    items = {it["id"]: it for it in ledger["items"]}
+    m = re.search(r"^stories:\s*(.+)$", Path(slice_path).read_text(), re.M)
+    if not m:
+        sys.exit(f"{slice_path}: missing 'stories:' line")
+    stories = split_list(m.group(1))
+
+    tagged = {}
+    for f in sorted((ROOT / tests_dir).rglob("test_*.py")):
+        for sid, n in TEST_TAG_RE.findall(f.read_text()):
+            tagged.setdefault((sid, int(n)), []).append(f.relative_to(ROOT).as_posix())
+
+    problems, rows = [], []
+    for sid in stories:
+        if sid not in items:
+            problems.append(f"{sid}: not in ledger")
+            continue
+        acs = acceptance_criteria(items[sid]["body"])
+        if not acs:
+            problems.append(f"{sid}: no acceptance criteria in ledger")
+        for n, text in enumerate(acs, 1):
+            files = tagged.get((sid, n))
+            rows.append((sid, n, bool(files), text))
+            if not files:
+                problems.append(f"{sid} AC{n} has no tagged test: {text[:80]}")
+    for (sid, n), files in tagged.items():
+        if sid not in stories:
+            problems.append(f"{', '.join(set(files))}: tagged {sid} which is not in this slice")
+        elif sid in items and n > len(acceptance_criteria(items[sid]["body"])):
+            problems.append(f"{', '.join(set(files))}: tagged {sid} AC{n} which does not exist")
+
+    for sid, n, ok, text in rows:
+        print(f"{'✓' if ok else '✗'} {sid} AC{n}  {text[:90]}")
+    covered = sum(ok for *_, ok, _ in rows)
+    print(f"\nAcceptance criteria covered: {covered}/{len(rows)} across {len(stories)} stories")
+    for p in problems:
+        print(f"ERROR {p}")
+    print("PASS" if not problems else f"FAIL ({len(problems)} problems)")
+    return not problems
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name in ("validate", "sync", "verify"):
+    for name in ("validate", "sync", "verify", "trace"):
         p = sub.add_parser(name)
         p.add_argument("ledger")
         if name == "sync":
             p.add_argument("--project-title", default="DCA Case Management")
             p.add_argument("--dry-run", action="store_true")
+        if name == "trace":
+            p.add_argument("slice")
     a = ap.parse_args()
+    if a.cmd == "trace":
+        sys.exit(0 if trace(a.ledger, a.slice) else 1)
     if a.cmd == "validate":
         sys.exit(1 if validate(a.ledger)[2] else 0)
     if a.cmd == "sync":

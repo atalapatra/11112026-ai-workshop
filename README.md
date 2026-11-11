@@ -1,6 +1,9 @@
-# AI Workshop: Transcript → User Stories
+# AI Workshop: Transcript → User Stories → Working Software
 
-A workshop exercise in building a **durable, improvable working process with Claude**: turn a meeting transcript into a GitHub Project of user stories, tasks and spikes — and *prove* nothing in the transcript was missed.
+A workshop exercise in building a **durable, improvable working process with Claude**:
+
+1. **Exercise 1:** turn a meeting transcript into a GitHub Project of user stories, tasks and spikes, and *prove* nothing in the transcript was missed.
+2. **Exercise 2:** build a **vertical slice** of those stories as working software, with every acceptance criterion traced to a test.
 
 The sample input is a fictional kickoff meeting for modernizing a state agency's case management system ([dca-case-management-kickoff-transcript.md](dca-case-management-kickoff-transcript.md)). The output is the [DCA Case Management](https://github.com/users/atalapatra/projects/1) GitHub Project.
 
@@ -21,6 +24,18 @@ transcript ──► ledger (backlog/*.md) ──► validate ──► human re
 7. **Retro** — record what was learned in [lessons-learned.md](process/lessons-learned.md) and update the rules.
 
 The full step-by-step is the Claude skill [`transcript-to-backlog`](.claude/skills/transcript-to-backlog/SKILL.md); in Claude Code, ask it to turn a transcript into a backlog and it will follow that process.
+
+## Building a slice (exercise 2)
+
+The first slice, **[Intake to deadline](slices/intake-to-deadline.md)**, covers a caseworker searching for a person, recording an application, verifying documents against a program checklist, and working a queue where expedited Housing cases are flagged automatically and sorted to the top.
+
+Stories: [DCA-001](https://github.com/atalapatra/11112026-ai-workshop/issues/1) search · [DCA-004](https://github.com/atalapatra/11112026-ai-workshop/issues/4) intake · [DCA-011](https://github.com/atalapatra/11112026-ai-workshop/issues/11) checklist · [DCA-012](https://github.com/atalapatra/11112026-ai-workshop/issues/12) verification · [DCA-033](https://github.com/atalapatra/11112026-ai-workshop/issues/33) 30-day clock · [DCA-034](https://github.com/atalapatra/11112026-ai-workshop/issues/34) expedited flag · [DCA-035](https://github.com/atalapatra/11112026-ai-workshop/issues/35) expedited queue/alerts
+
+How it's built ([build-process.md](process/build-process.md), skill [`build-slice`](.claude/skills/build-slice/SKILL.md)):
+- Each acceptance-criterion bullet in the ledger becomes a test tagged `@pytest.mark.story("DCA-034", 2)`.
+- `trace` fails if any criterion in the slice has no tagged test. That closes the chain **transcript → ledger → GitHub issue → test**.
+- Business rules are pure functions in `app/domain/`; "today" is injectable, so deadline rules are tested on fixed dates.
+- Done means the tests pass, the tests are proven to bite (rules broken on purpose), and the journey has been walked in the browser.
 
 ## Story vs. task vs. spike (short version)
 
@@ -54,6 +69,14 @@ Not everything becomes an issue: items can also be **parking-lot** (deferred, st
 | [scripts/backlog.py](scripts/backlog.py) | `validate` / `sync` / `verify` tooling (Python 3, stdlib only) |
 | [.claude/skills/transcript-to-backlog/SKILL.md](.claude/skills/transcript-to-backlog/SKILL.md) | The process as a reusable Claude skill |
 | [CLAUDE.md](CLAUDE.md) | Project instructions Claude loads every session |
+| [process/build-process.md](process/build-process.md) | How a story becomes tested software; Definition of Done; conventions |
+| [slices/intake-to-deadline.md](slices/intake-to-deadline.md) | Slice 1: stories in scope, stubs, out of scope, decisions made while building |
+| [.claude/skills/build-slice/SKILL.md](.claude/skills/build-slice/SKILL.md) | The build process as a reusable Claude skill |
+| `app/domain/` | Pure business rules: search matching, deadlines/expedited, checklist generation |
+| `app/db.py`, `app/schema.sql`, `app/seed.py` | SQLite persistence, schema (immutable verifications), reference + demo data |
+| `app/web/`, `app/templates/`, `app/static/` | FastAPI routes (one module per area), Jinja templates, CSS |
+| `tests/` | One file per story; every test tagged with the acceptance criterion it proves |
+| `.claude/launch.json` | `dca-app` dev server config for the Claude browser preview |
 
 ## Usage
 
@@ -85,7 +108,41 @@ Confirm GitHub matches the ledger:
 python3 scripts/backlog.py verify backlog/dca-kickoff.md
 ```
 
-**To change the backlog, edit the ledger and re-run `sync`** — never hand-edit generated issues; `verify` will flag the drift.
+**To change the backlog, edit the ledger and re-run `sync`.** Never hand-edit generated issues; `verify` will flag the drift.
+
+### Running the app
+
+One-time setup (Python 3.12+):
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+```
+
+Create a fresh database with demo data (fictional people only):
+
+```bash
+.venv/bin/python -m app.seed
+```
+
+Start the app at http://localhost:8000 and use the header dropdown to switch between caseworker, supervisor and program admin (stand-in for SSO):
+
+```bash
+.venv/bin/uvicorn app.main:app --reload
+```
+
+Run the tests:
+
+```bash
+.venv/bin/pytest -q
+```
+
+Check every acceptance criterion in the slice has a test:
+
+```bash
+python3 scripts/backlog.py trace backlog/dca-kickoff.md slices/intake-to-deadline.md
+```
+
+Set `DCA_TODAY=2026-11-20` to see the deadline clock on a different day.
 
 ## Current state
 
@@ -95,7 +152,9 @@ python3 scripts/backlog.py verify backlog/dca-kickoff.md
 | GitHub Project | [DCA Case Management](https://github.com/users/atalapatra/projects/1) — 107 issues, `verify` passing |
 | Breakdown | 67 stories, 28 tasks (8 decisions, 8 action items), 6 spikes, 6 parked stories |
 | Ledger-only | 3 superseded, 1 rejected, 1 merged recap |
+| Slice 1 | [Intake to deadline](slices/intake-to-deadline.md): 7 stories built, 79 tests passing, `trace` 22/22 acceptance criteria |
 
 ## Changelog
 
 - **2026-11-11** — Initial process: classification rules, ledger format, `validate`/`sync`/`verify` tooling, Claude skill. DCA kickoff transcript converted and synced (107 issues). Renamed project field `Type` → `Item Type` (reserved by GitHub). Workshop slide deck removed from the repo and `*.pptx` ignored.
+- **2026-11-11** — Exercise 2: slice 1 "Intake to deadline" built (FastAPI + SQLite, 7 stories, 79 tests). Added `trace` subcommand, build process, `build-slice` skill, slice file. Search changed to POST after the browser walkthrough found SSNs in URLs.

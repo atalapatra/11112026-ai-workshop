@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}New application · DCA{% endblock %}
+{% block content %}
+<h1>New application</h1>
+{% if error %}<div class="alert" role="alert">{{ error }}</div>{% endif %}
+<form method="post" action="/applications">
+  <fieldset class="grid">
+    <legend>Application</legend>
+    <div><label for="program">Program</label>
+      <select id="program" name="program" required>
+        <option value="">Choose…</option>
+        {% for k, v in PROGRAMS.items() %}<option value="{{ k }}" {% if form.program == k %}selected{% endif %}>{{ v }}</option>{% endfor %}
+      </select></div>
+    <div><label for="channel">How it arrived</label>
+      <select id="channel" name="channel" required>
+        <option value="">Choose…</option>
+        {% for k, v in CHANNELS.items() %}<option value="{{ k }}" {% if form.channel == k %}selected{% endif %}>{{ v }}</option>{% endfor %}
+      </select></div>
+    <div><label for="received_date">Date received <span class="hint">starts the 30-day clock</span></label>
+      <input id="received_date" name="received_date" type="date" required value="{{ form.received_date }}" max="{{ today.isoformat() }}"></div>
+    <div><label for="eviction_date">Eviction date <span class="hint">Housing only — within 7 days makes it expedited</span></label>
+      <input id="eviction_date" name="eviction_date" type="date" value="{{ form.eviction_date }}"></div>
+    <div class="check"><input id="emergency" name="emergency" type="checkbox" {% if form.emergency %}checked{% endif %}>
+      <label for="emergency">Emergency request <span class="hint">Utility Relief — adds shutoff notice</span></label></div>
+  </fieldset>
+
+  <fieldset class="grid">
+    <legend>Address</legend>
+    <div class="wide"><label for="address">Street address</label><input id="address" name="address" required value="{{ form.address }}"></div>
+    <div><label for="city">City</label><input id="city" name="city" required value="{{ form.city }}"></div>
+    <div><label for="zip">ZIP</label><input id="zip" name="zip" required inputmode="numeric" value="{{ form.zip }}"></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Household members</legend>
+    <p class="hint">First row is the applicant. Leave unused rows blank.</p>
+    <table class="members">
+      <thead><tr><th scope="col">Relationship</th><th scope="col">First name</th><th scope="col">Last name</th><th scope="col">Date of birth</th><th scope="col">SSN (optional)</th><th scope="col">Monthly income ($)</th></tr></thead>
+      <tbody>
+      {% for m in form.members %}{% set i = loop.index0 %}
+      <tr>
+        <td>{% if i == 0 %}<strong>Applicant</strong><input type="hidden" name="members-0-relationship" value="applicant">{% if m.person_id %}<input type="hidden" name="members-0-person_id" value="{{ m.person_id }}"><br><span class="hint">existing person</span>{% endif %}
+          {% else %}<label class="sr-only" for="m{{ i }}rel">Member {{ i + 1 }} relationship</label>
+          <select id="m{{ i }}rel" name="members-{{ i }}-relationship">
+            <option value="">—</option>
+            {% for r in RELATIONSHIPS[1:] %}<option value="{{ r }}" {% if m.relationship == r %}selected{% endif %}>{{ r }}</option>{% endfor %}
+          </select>{% endif %}</td>
+        <td><label class="sr-only" for="m{{ i }}fn">Member {{ i + 1 }} first name</label><input id="m{{ i }}fn" {% if m.person_id %}readonly{% endif %} name="members-{{ i }}-first_name" value="{{ m.first_name or '' }}" {% if i == 0 %}required{% endif %}></td>
+        <td><label class="sr-only" for="m{{ i }}ln">Member {{ i + 1 }} last name</label><input id="m{{ i }}ln" {% if m.person_id %}readonly{% endif %} name="members-{{ i }}-last_name" value="{{ m.last_name or '' }}" {% if i == 0 %}required{% endif %}></td>
+        <td><label class="sr-only" for="m{{ i }}dob">Member {{ i + 1 }} date of birth</label><input id="m{{ i }}dob" {% if m.person_id %}readonly{% endif %} type="date" name="members-{{ i }}-dob" value="{{ m.dob or '' }}" {% if i == 0 %}required{% endif %}></td>
+        <td><label class="sr-only" for="m{{ i }}ssn">Member {{ i + 1 }} SSN</label><input id="m{{ i }}ssn" name="members-{{ i }}-ssn" inputmode="numeric" value="{{ m.ssn or '' }}"></td>
+        <td><label class="sr-only" for="m{{ i }}inc">Member {{ i + 1 }} monthly income</label><input id="m{{ i }}inc" name="members-{{ i }}-monthly_income" inputmode="decimal" value="{{ m.monthly_income or '' }}"></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </fieldset>
+  <button type="submit">Create application</button>
+</form>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Notifications · DCA{% endblock %}
+{% block content %}
+<h1>Notifications</h1>
+{% if items %}
+<ul class="notes">
+{% for n in items %}
+  <li class="{{ 'unread' if not n.read else '' }} {{ 'exp' if n.message.startswith('EXPEDITED') else '' }}">
+    {% if n.application_id %}<a href="/applications/{{ n.application_id }}">{{ n.message }}</a>{% else %}{{ n.message }}{% endif %}
+    <span class="hint">{{ n.created_at.replace('T', ' ') }}</span>
+  </li>
+{% endfor %}
+</ul>
+{% else %}<p>No notifications.</p>{% endif %}
+{% endblock %}

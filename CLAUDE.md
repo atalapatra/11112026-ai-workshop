@@ -6,7 +6,9 @@ Turning meeting transcripts into a GitHub Project of stories, tasks and spikes, 
 - Rules: `process/classification-rules.md` — story vs. task vs. spike, dispositions, labels
 - Lessons: `process/lessons-learned.md` — read before a run, append after
 - Ledgers (source of truth): `backlog/*.md`; GitHub state written to `backlog/*.github.json`
-- Tooling: `python3 scripts/backlog.py {validate|sync|verify} <ledger>` (stdlib only)
+- Tooling: `python3 scripts/backlog.py {validate|sync|verify} <ledger>` and `trace <ledger> <slice>` (stdlib only)
+- Building software: `.claude/skills/build-slice/SKILL.md`, `process/build-process.md`, slices in `slices/`
+- App: FastAPI + SQLite in `app/` (domain rules in `app/domain/`, pure, dates passed in); tests in `tests/` tagged `@pytest.mark.story("DCA-xxx", n)`; run with `.venv/bin/pytest -q`
 
 Conventions
 - Edit the ledger, then re-run `sync`; never hand-edit generated issues.

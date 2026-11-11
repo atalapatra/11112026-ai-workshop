@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Document requirements · DCA{% endblock %}
+{% block content %}
+<h1>Document requirements</h1>
+<p class="lede">Changes apply to applications created from now on. Existing checklists are not changed.</p>
+{% if error %}<div class="alert" role="alert">{{ error }}</div>{% endif %}
+{% for pkey, pname in PROGRAMS.items() %}
+<h2>{{ pname }}</h2>
+<table>
+  <thead><tr><th scope="col">Document</th><th scope="col">Required for</th><th scope="col">Condition</th><th scope="col">Status</th><th scope="col"><span class="sr-only">Actions</span></th></tr></thead>
+  <tbody>
+  {% for r in reqs if r.program == pkey %}
+  <tr class="{{ '' if r.active else 'inactive' }}">
+    <td>{{ r.label }}</td><td>{{ APPLIES_TO[r.applies_to] }}</td><td>{{ r.condition or '—' }}</td>
+    <td>{{ 'Active' if r.active else 'Inactive' }}</td>
+    <td><form method="post" action="/admin/requirements/{{ r.id }}/active">
+      <input type="hidden" name="active" value="{{ 0 if r.active else 1 }}">
+      <button class="small secondary">{{ 'Deactivate' if r.active else 'Reactivate' }}</button></form></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endfor %}
+
+<h2>Add a requirement</h2>
+<form method="post" action="/admin/requirements" class="grid">
+  <div><label for="program">Program</label><select id="program" name="program" required>
+    {% for k, v in PROGRAMS.items() %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
+  <div class="wide"><label for="label">Document</label><input id="label" name="label" required></div>
+  <div><label for="applies_to">Required for</label><select id="applies_to" name="applies_to">
+    {% for k, v in APPLIES_TO.items() %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
+  <div><label for="condition">Only when</label><select id="condition" name="condition">
+    <option value="">Always</option><option value="emergency">Emergency request</option></select></div>
+  <div class="actions"><button type="submit">Add requirement</button></div>
+</form>
+{% endblock %}
