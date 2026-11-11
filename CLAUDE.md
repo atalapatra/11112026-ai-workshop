@@ -11,4 +11,5 @@ Turning meeting transcripts into a GitHub Project of stories, tasks and spikes, 
 Conventions
 - Edit the ledger, then re-run `sync`; never hand-edit generated issues.
 - `validate` must PASS before `sync`; `verify` must PASS before calling a backlog done.
+- Keep `README.md` current: whenever you add or change a file, rule, command, transcript or project, update its repo layout, usage, "Current state" table, and add a dated line to its Changelog in the same change.
 - When a classification call is hard, record it in lessons-learned and, if it changes a rule, add a worked example to the rules file.
