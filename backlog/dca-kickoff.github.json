@@ -1,0 +1,466 @@
+{
+  "project_number": 1,
+  "project_id": "PVT_kwHOAI-SNs4BrLUS",
+  "owner": "atalapatra",
+  "project_url": "https://github.com/users/atalapatra/projects/1",
+  "fields": {
+    "Item Type": {
+      "id": "PVTSSF_lAHOAI-SNs4BrLUSzhpfLdE",
+      "options": {
+        "Story": "19743014",
+        "Task": "ffea4954",
+        "Spike": "c1008f7e"
+      }
+    },
+    "Phase": {
+      "id": "PVTSSF_lAHOAI-SNs4BrLUSzhpfLds",
+      "options": {
+        "Phase 1": "2c69b88c",
+        "Parking Lot": "4f4e7074"
+      }
+    },
+    "Area": {
+      "id": "PVTF_lAHOAI-SNs4BrLUSzhpfLdw",
+      "options": {}
+    },
+    "Source": {
+      "id": "PVTF_lAHOAI-SNs4BrLUSzhpfLd0",
+      "options": {}
+    },
+    "Ledger ID": {
+      "id": "PVTF_lAHOAI-SNs4BrLUSzhpfLd4",
+      "options": {}
+    }
+  },
+  "items": {
+    "DCA-001": {
+      "issue": 1,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH39ZI"
+    },
+    "DCA-002": {
+      "issue": 2,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH39iY"
+    },
+    "DCA-003": {
+      "issue": 3,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH39q0"
+    },
+    "DCA-004": {
+      "issue": 4,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH393A"
+    },
+    "DCA-005": {
+      "issue": 5,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH3-FA"
+    },
+    "DCA-006": {
+      "issue": 6,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH3-UU"
+    },
+    "DCA-007": {
+      "issue": 7,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH3-iI"
+    },
+    "DCA-008": {
+      "issue": 8,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH3-vk"
+    },
+    "DCA-009": {
+      "issue": 9,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH3-7Y"
+    },
+    "DCA-010": {
+      "issue": 10,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH3_Ck"
+    },
+    "DCA-011": {
+      "issue": 11,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH3_MQ"
+    },
+    "DCA-012": {
+      "issue": 12,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH3_Vk"
+    },
+    "DCA-013": {
+      "issue": 13,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH3_fk"
+    },
+    "DCA-014": {
+      "issue": 14,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH3_qk"
+    },
+    "DCA-015": {
+      "issue": 15,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH3_4g"
+    },
+    "DCA-016": {
+      "issue": 16,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4AFk"
+    },
+    "DCA-017": {
+      "issue": 17,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4ARs"
+    },
+    "DCA-018": {
+      "issue": 18,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4AbY"
+    },
+    "DCA-019": {
+      "issue": 19,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Al0"
+    },
+    "DCA-020": {
+      "issue": 20,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Avo"
+    },
+    "DCA-021": {
+      "issue": 21,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4A88"
+    },
+    "DCA-022": {
+      "issue": 22,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4BIU"
+    },
+    "DCA-023": {
+      "issue": 23,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4BSk"
+    },
+    "DCA-024": {
+      "issue": 24,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Ba0"
+    },
+    "DCA-025": {
+      "issue": 25,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Blg"
+    },
+    "DCA-026": {
+      "issue": 26,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Buw"
+    },
+    "DCA-027": {
+      "issue": 27,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4B5Q"
+    },
+    "DCA-028": {
+      "issue": 28,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4CE8"
+    },
+    "DCA-029": {
+      "issue": 29,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4CP4"
+    },
+    "DCA-030": {
+      "issue": 30,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Cc8"
+    },
+    "DCA-031": {
+      "issue": 31,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Cqs"
+    },
+    "DCA-032": {
+      "issue": 32,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4C3c"
+    },
+    "DCA-033": {
+      "issue": 33,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4DD0"
+    },
+    "DCA-034": {
+      "issue": 34,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4DPg"
+    },
+    "DCA-035": {
+      "issue": 35,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4DcA"
+    },
+    "DCA-036": {
+      "issue": 36,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4DpI"
+    },
+    "DCA-037": {
+      "issue": 37,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4D2U"
+    },
+    "DCA-038": {
+      "issue": 38,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4EDk"
+    },
+    "DCA-039": {
+      "issue": 39,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4ER0"
+    },
+    "DCA-040": {
+      "issue": 40,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4EdI"
+    },
+    "DCA-041": {
+      "issue": 41,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4ElU"
+    },
+    "DCA-042": {
+      "issue": 42,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4EwI"
+    },
+    "DCA-043": {
+      "issue": 43,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4E5M"
+    },
+    "DCA-044": {
+      "issue": 44,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4FDQ"
+    },
+    "DCA-045": {
+      "issue": 45,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4FO0"
+    },
+    "DCA-046": {
+      "issue": 46,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4FZ4"
+    },
+    "DCA-047": {
+      "issue": 47,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Fns"
+    },
+    "DCA-048": {
+      "issue": 48,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Fzs"
+    },
+    "DCA-049": {
+      "issue": 49,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4GAQ"
+    },
+    "DCA-050": {
+      "issue": 50,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4GLo"
+    },
+    "DCA-051": {
+      "issue": 51,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4GXk"
+    },
+    "DCA-052": {
+      "issue": 52,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Gls"
+    },
+    "DCA-053": {
+      "issue": 53,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Gyo"
+    },
+    "DCA-054": {
+      "issue": 54,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4HBE"
+    },
+    "DCA-055": {
+      "issue": 55,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4HL0"
+    },
+    "DCA-056": {
+      "issue": 56,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4HYQ"
+    },
+    "DCA-057": {
+      "issue": 57,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Hlw"
+    },
+    "DCA-058": {
+      "issue": 58,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4HzA"
+    },
+    "DCA-059": {
+      "issue": 59,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4IBI"
+    },
+    "DCA-060": {
+      "issue": 60,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4INg"
+    },
+    "DCA-061": {
+      "issue": 61,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4IZY"
+    },
+    "DCA-062": {
+      "issue": 62,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Ii8"
+    },
+    "DCA-063": {
+      "issue": 63,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Ito"
+    },
+    "DCA-064": {
+      "issue": 64,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4I48"
+    },
+    "DCA-065": {
+      "issue": 65,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4JDU"
+    },
+    "DCA-066": {
+      "issue": 66,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4JQc"
+    },
+    "DCA-067": {
+      "issue": 67,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Jcc"
+    },
+    "DCA-068": {
+      "issue": 68,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Jng"
+    },
+    "DCA-069": {
+      "issue": 69,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Jyw"
+    },
+    "DCA-070": {
+      "issue": 70,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4J9Q"
+    },
+    "DCA-071": {
+      "issue": 71,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4KII"
+    },
+    "DCA-072": {
+      "issue": 72,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4KSA"
+    },
+    "DCA-073": {
+      "issue": 73,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Kbk"
+    },
+    "DCA-074": {
+      "issue": 74,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4KlA"
+    },
+    "DCA-075": {
+      "issue": 75,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Kx4"
+    },
+    "DCA-076": {
+      "issue": 76,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4K84"
+    },
+    "DCA-077": {
+      "issue": 77,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4LGY"
+    },
+    "DCA-078": {
+      "issue": 78,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4LQc"
+    },
+    "DCA-079": {
+      "issue": 79,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Law"
+    },
+    "DCA-080": {
+      "issue": 80,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Lmw"
+    },
+    "DCA-081": {
+      "issue": 81,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4L0I"
+    },
+    "DCA-082": {
+      "issue": 82,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4MBw"
+    },
+    "DCA-083": {
+      "issue": 83,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4ML8"
+    },
+    "DCA-084": {
+      "issue": 84,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4MUU"
+    },
+    "DCA-085": {
+      "issue": 85,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Mew"
+    },
+    "DCA-086": {
+      "issue": 86,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4MrA"
+    },
+    "DCA-087": {
+      "issue": 87,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4M1E"
+    },
+    "DCA-088": {
+      "issue": 88,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4M_0"
+    },
+    "DCA-089": {
+      "issue": 89,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4NNw"
+    },
+    "DCA-090": {
+      "issue": 90,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4NWU"
+    },
+    "DCA-091": {
+      "issue": 91,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Ngo"
+    },
+    "DCA-092": {
+      "issue": 92,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Nqs"
+    },
+    "DCA-093": {
+      "issue": 93,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4N0g"
+    },
+    "DCA-094": {
+      "issue": 94,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4N_E"
+    },
+    "DCA-095": {
+      "issue": 95,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4OKM"
+    },
+    "DCA-096": {
+      "issue": 96,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4OW0"
+    },
+    "DCA-097": {
+      "issue": 97,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4OiQ"
+    },
+    "DCA-098": {
+      "issue": 98,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Oy8"
+    },
+    "DCA-099": {
+      "issue": 99,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4PAE"
+    },
+    "DCA-100": {
+      "issue": 100,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4PJg"
+    },
+    "DCA-101": {
+      "issue": 101,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4PUA"
+    },
+    "DCA-102": {
+      "issue": 102,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4PfQ"
+    },
+    "DCA-103": {
+      "issue": 103,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4Ppg"
+    },
+    "DCA-104": {
+      "issue": 104,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4P14"
+    },
+    "DCA-105": {
+      "issue": 105,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4P_c"
+    },
+    "DCA-106": {
+      "issue": 106,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4QKM"
+    },
+    "DCA-107": {
+      "issue": 107,
+      "item_id": "PVTI_lAHOAI-SNs4BrLUSzhH4QUU"
+    }
+  },
+  "repo": "atalapatra/11112026-ai-workshop"
+}
